@@ -1,0 +1,32 @@
+{
+  "name": "regulex",
+  "version": "1.0.0",
+  "description": "JavaScript Regular Expression Parser and Visualizer.",
+  "main": "lib/main",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JexCheng/regulex.git"
+  },
+  "keywords": [
+    "Regular Expression",
+    "RegExp",
+    "Regulex"
+  ],
+  "dependencies": {},
+  "author": {
+    "name": "Jex"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-debug-macros": "^0.1.11",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.79.1"
+  },
+  "scripts": {
+    "build": "babel src/ -d lib/",
+    "prepublish": "yarn run build"
+  }
+}

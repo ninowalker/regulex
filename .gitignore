@@ -1,0 +1,8 @@
+*.swp
+node_modules
+*.log
+.node_repl_history
+.vscode
+.DS_Store
+yarn.lock
+
