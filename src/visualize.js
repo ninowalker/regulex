@@ -2,7 +2,7 @@ if (typeof define !== 'function') var define = require('amdefine')(module);
 define(['./Kit','./parse'],function (K,parse) {
 parse.exportConstants();
 
-var FONT_SIZE=16,LABEL_FONT_SIZE=14,PATH_LEN=16,BG_COLOR='#EEE',
+var FONT_SIZE=16,LABEL_FONT_SIZE=14,PATH_LEN=16,BG_COLOR='#FFF',
     FONT_FAMILY='DejaVu Sans Mono,monospace';
 
 var _multiLine=false; /* global flag quick work*/
@@ -38,8 +38,8 @@ function visualize(re,flags,paper) {
   var bg = paper.rect(0,0,0,0);
   bg.attr("fill", BG_COLOR);
   bg.attr("stroke", BG_COLOR);
-  
-  
+
+
   initTmpText(paper);
   _multiLine=!!~flags.indexOf('m');
 
@@ -52,7 +52,7 @@ function visualize(re,flags,paper) {
   var charSize=getCharSize(FONT_SIZE,'bold'),
       startX=PAPER_MARGIN,startY=charSize.height/2+PAPER_MARGIN,
       width=0,height=0;
-
+  /*
   width=texts.reduce(function(x,t) {
     t.x=x;
     t.y=startY;
@@ -62,23 +62,23 @@ function visualize(re,flags,paper) {
   width+=PAPER_MARGIN;
   height=charSize.height+PAPER_MARGIN*2;
   texts=paper.add(texts);
-  
-  paper.setSize(width,charSize.height+PAPER_MARGIN*2);
 
+  paper.setSize(width,charSize.height+PAPER_MARGIN*2);
+  */
   var ret=plot(re.tree,0,0);
 
   height=Math.max(ret.height+3*PAPER_MARGIN+charSize.height,height);
   width=Math.max(ret.width+2*PAPER_MARGIN,width);
 
   paper.setSize(width,height);
-  
+
   bg.attr('width',width);
   bg.attr('height',height);
-  
-  
+
+
   translate(ret.items,PAPER_MARGIN,PAPER_MARGIN*2+charSize.height-ret.y);
   paper.add(ret.items);
-  
+
 }
 
 
@@ -288,7 +288,7 @@ var plotNode={
   },
   dot:function (node,x,y) {
     var bgColor='DarkGreen',textColor='white';
-    var a=textRect('AnyCharExceptNewLine',x,y,bgColor,textColor);
+    var a=textRect('Any',x,y,bgColor,textColor); //AnyCharExceptNewLine
     a.rect.r=10;
     a.rect.tip="AnyChar except CR LF"
     return a;
@@ -469,7 +469,7 @@ var plotNode={
   },
   charset:function (node,x,y) {
     var padding=6,spacing=4;
-    var clsDesc={d:'Digit',D:'NonDigit',w:'Word',W:'NonWord',s:'WhiteSpace',S:'NonWhiteSpace'};
+    var clsDesc={d:'Type',D:'Relname',w:'Id',W:'NonWord',s:'Any Op',S:'NonWhiteSpace'};
     var charBgColor='LightSkyBlue',charTextColor='black',
         clsBgColor='Green',clsTextColor='white',
         rangeBgColor='teal',rangeTextColor='white',
@@ -617,14 +617,15 @@ var plotNode={
     var simpleAssert={
       AssertNonWordBoundary:{bg:"maroon",fg:"white"},
       AssertWordBoundary:{bg:"purple",fg:"white"},
-      AssertEnd:{bg:"Indigo",fg:"white"},
-      AssertBegin:{bg:"Indigo",fg:"white"}
+      AssertEnd:{bg:"Indigo",fg:"white", name: "end"},
+      AssertBegin:{bg:"Indigo",fg:"white", name: "root"}
     };
     var conf,nat=node.assertionType,txt=nat.replace('Assert','')+'!';
     if (conf=simpleAssert[nat]) {
       if (_multiLine && (nat==='AssertBegin' || nat==='AssertEnd'))  {
         txt='Line'+txt;
       }
+      txt = conf.name ? conf.name : txt;
       return textRect(txt,x,y,conf.bg,conf.fg);
     }
 
@@ -637,7 +638,7 @@ var plotNode={
       lineColor="#F63";
       fg="Purple";
       //txt="Negative\nLookahead!"; // break line
-      txt="Not followed by:";
+      txt="Not:";
     }
 
     var sub=plotNode.group(node,x,y);

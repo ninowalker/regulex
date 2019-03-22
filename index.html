@@ -37,7 +37,7 @@ display:inline-block;
 margin:8px 16px;
 }
 #inputCt div.re {
-background:#EEE;
+background:#FFF;
 font-size:1.2em;
 line-height: 1.4em;
 color:#333;
@@ -57,7 +57,7 @@ width:100%;
 color:#3030C0;
 padding:0 2px;
 border:none;
-background:#EEE;
+background:#FFF;
 font-size:1.2em;
 line-height: 1.4em;
 height:1.4em;
@@ -80,7 +80,7 @@ width:100%;
   margin-right:4px;
 }
 #errorBox {
-background:#EEE;
+background:#FFF;
 font-size:1.2em;
 line-height: 1.4em;
 border:1px solid black;
@@ -118,7 +118,7 @@ text-decoration: none;
 padding:4px;
 margin:0px 16px;
 border:1px solid black;
-background: #EEE;
+background: #FFF;
 overflow: auto;
 cursor:move;
 -webkit-touch-callout: none;
@@ -143,7 +143,7 @@ footer,footer a {
 color:#EEF;
 }
 body.embed {
-  background: #EEE;
+  background: #FFF;
 }
 body.embed,body.embed #graphCt {
   margin:0;
@@ -340,12 +340,12 @@ function showError(re,err) {
 function serializeHash(params) {
   var re=getInputValue();
   var flags=getFlags();
-  return "#!" + 
-    (params.debug?"debug=true&":"") + 
-    (params.cmd?"cmd="+params.cmd+"&":"") + 
-    (params.embed?"embed=true&":"") + 
+  return "#!" +
+    (params.debug?"debug=true&":"") +
+    (params.cmd?"cmd="+params.cmd+"&":"") +
+    (params.embed?"embed=true&":"") +
     "flags="+flags+"&re="+encodeURIComponent(params.re=re);
-  
+
 }
 
 function changeHash() {
@@ -457,7 +457,7 @@ function showExportImage() {
 
   var canvas = document.createElement( "canvas" );
   var ctx = canvas.getContext( "2d" );
-  
+
   canvas.className="exportCanvas";
   canvas.setAttribute('width',w);
   canvas.setAttribute('height',h);
